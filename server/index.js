@@ -12,9 +12,9 @@ app.use(express.json());
 // ROUTES //
 app.post("/todos", async(req, res) => {
     try {
-        const {description} = req.body;
-        const newTodo = await pool.query("INSERT INTO todo (description) VALUES($1) RETURNING *", 
-        [description]);
+        const {description, completed } = req.body;
+        const newTodo = await pool.query("INSERT INTO todo (description, completed) VALUES($1, $2) RETURNING *", 
+        [description, completed]);
 
         res.json(newTodo.rows[0]);
     } catch (error) {
